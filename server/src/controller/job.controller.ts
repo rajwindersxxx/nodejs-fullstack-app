@@ -66,7 +66,6 @@ export class jobController {
       skip: offset,
     });
     const total = await prisma.job.count({
-      ...filterOptions,
       where: {
         active: true,
       },
