@@ -1,0 +1,74 @@
+export class APIFeatures<T> {
+  queryString: Record<string, string>;
+  filterOptions: T;
+  limit: number;
+  offset: number;
+  constructor(queryString: Record<string, string>) {
+    this.filterOptions = {} as T;
+    this.queryString = queryString;
+    this.limit = 10;
+    this.offset = 0;
+  }
+  filter() {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { fields, sortby, sortOrder, limit, offset, ...otherFields } =
+      this.queryString;
+    const selectedFilters: Record<string, unknown> = {};
+    for (const [rawKey, rawValue] of Object.entries(otherFields)) {
+      const match = rawKey.match(/^(\w+)(\[(\w+)\])?$/);
+      if (!match) continue;
+      const field = match[1];
+      const operator = match[3]; // may be undefined
+      let value: unknown = rawValue;
+      //   handle boolean and number values
+      if (rawValue === "true") value = true;
+      else if (rawValue === "false") value = false;
+      else if (!isNaN(Number(rawValue))) value = Number(rawValue);
+
+      if (operator) {
+        selectedFilters[field] = { [operator]: value };
+      } else {
+        selectedFilters[field] = value;
+      }
+    }
+    this.filterOptions = { ...this.filterOptions, where: selectedFilters };
+    return this;
+  }
+  limitFields() {
+    const { fields } = this.queryString;
+    const selectedField: { [key: string]: boolean } = {};
+    if (fields) {
+      String(fields)
+        .split(",")
+        .forEach((item: string) => {
+          return (selectedField[item] = true);
+        });
+      this.filterOptions = { ...this.filterOptions, select: selectedField };
+    }
+    return this;
+  }
+  sort() {
+    const { sortby, sortOrder } = this.queryString;
+    let sorting: { [key: string]: string };
+
+    if (sortby) {
+      sorting = {
+        [String(sortby)]: String(sortOrder || "desc"),
+      };
+      this.filterOptions = { ...this.filterOptions, orderBy: sorting };
+    }
+    return this;
+  }
+  pagination() {
+    const { offset, limit } = this.queryString;
+    this.filterOptions = {
+      ...this.filterOptions,
+      skip: this.offset,
+      take: this.limit,
+    };
+
+    if (offset) this.offset = Number(offset);
+    if (limit) this.limit = Number(limit);
+    return this;
+  }
+}
