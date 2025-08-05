@@ -60,8 +60,14 @@ async function main() {
       });
     }
   }
+  const userAuth = userData[0].email;
   await prisma.application.createManyAndReturn({
     data: applications,
+  });
+  console.log({
+    email: userAuth,
+    password: "user",
+    message: "all user password is same",
   });
 }
 

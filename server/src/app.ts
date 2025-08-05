@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import helmet from "helmet";
+import path from "path";
 
 import { globalHandler } from "./utils/globalHandler";
 import cookieParser from "cookie-parser";
@@ -14,6 +15,7 @@ const app = express();
 app.use(morgan("dev"));
 
 app.use(helmet());
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: true, limit: "10kb" }));

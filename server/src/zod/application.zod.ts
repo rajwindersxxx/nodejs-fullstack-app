@@ -1,5 +1,5 @@
 import z from "zod";
-import {  validId } from "./genetic.zod";
+import { validId } from "./genetic.zod";
 
 export const applicationSchema = {
   bodySchema: z
