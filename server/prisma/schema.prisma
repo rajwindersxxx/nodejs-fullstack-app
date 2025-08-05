@@ -44,4 +44,5 @@ model Application {
   resumeUrl String
   Job       Job    @relation(fields: [jobId], references: [id])
   jobId     Int
+  @@unique([email, jobId])
 }

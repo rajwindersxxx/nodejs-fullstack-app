@@ -1,6 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import path from "path";
-import fs from "fs";
 import { appError } from "./appError";
 export function globalHandler(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -9,6 +7,7 @@ export function globalHandler(
   res: Response,
   _next: NextFunction
 ) {
+  console.log(error)
   if (error.name === "PrismaClientValidationError") {
     error = new appError("Invalid Input , please check your query", 400, "DB_VALIDATION_ERROR");
   }

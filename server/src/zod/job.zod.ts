@@ -1,5 +1,5 @@
 import z from "zod";
-import { params } from "./genetic.zod";
+import { validId } from "./genetic.zod";
 const password = z.string().min(4).max(15);
 export const createJobSchema = {
   bodySchema: z
@@ -18,7 +18,11 @@ export const updateJobSchema = {
       description: z.string(),
     })
     .strict(),
-  params,
+  paramsSchema: z
+    .object({
+      id: validId,
+    })
+    .strict(),
 };
 
 export const signupSchema = {

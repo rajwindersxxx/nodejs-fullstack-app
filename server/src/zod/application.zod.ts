@@ -1,5 +1,5 @@
 import z from "zod";
-import { params } from "./genetic.zod";
+import {  validId } from "./genetic.zod";
 
 export const applicationSchema = {
   bodySchema: z
@@ -9,5 +9,9 @@ export const applicationSchema = {
       resumeUrl: z.string().url(),
     })
     .strict(),
-  params,
+  paramsSchema: z
+    .object({
+      id: validId,
+    })
+    .strict(),
 };
