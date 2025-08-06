@@ -96,4 +96,16 @@ export class authController {
       200
     );
   });
+  static getAuthDetails = catchAsync(async (req, res, _next) => {
+    const data = await prisma.user.findUnique({
+      where: {
+        id: req.user.id,
+      },
+      select: {
+        email: true,
+        id: true,
+      },
+    });
+    response(res, data)
+  });
 }

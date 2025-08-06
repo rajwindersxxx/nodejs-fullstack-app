@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import helmet from "helmet";
 import path from "path";
+import cors from "cors";
 
 import { globalHandler } from "./utils/globalHandler";
 import cookieParser from "cookie-parser";
@@ -12,6 +13,10 @@ import jobRouter from "./routes/job.route";
 import applicationRouter from "./routes/application.route";
 dotenv.config({ path: "./.env" });
 const app = express();
+app.use(cors({
+  origin: "http://localhost:5173", // allow your frontend
+  credentials: true               // allow cookies if you're using them
+}));
 app.use(morgan("dev"));
 
 app.use(helmet());

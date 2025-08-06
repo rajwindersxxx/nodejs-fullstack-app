@@ -27,5 +27,5 @@ authRouter.patch(
   validationMiddleware(changePasswordSchema),
   authController.changePassword
 );
-
+authRouter.get("/me", authController.getAuthDetails)
 export default authRouter;

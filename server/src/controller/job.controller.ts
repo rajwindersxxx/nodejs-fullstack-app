@@ -31,13 +31,24 @@ export class jobController {
       .sort();
     const data = await prisma.job.findMany({
       ...filterOptions,
+      orderBy: {
+        id: "desc",
+      },
       where: {
         active: true,
         userId: req.user.id,
       },
+      include: {
+        _count: {
+          select: {
+            application: true,
+          },
+        },
+      },
       take: limit,
       skip: offset,
     });
+    console.log(data);
     const total = await prisma.job.count({
       ...filterOptions,
       where: {
@@ -62,6 +73,16 @@ export class jobController {
       where: {
         active: true,
       },
+      orderBy: {
+        id: "desc",
+      },
+      include: {
+        _count: {
+          select: {
+            application: true,
+          },
+        },
+      },
       take: limit,
       skip: offset,
     });
@@ -70,6 +91,7 @@ export class jobController {
         active: true,
       },
     });
+
     response(res, data, 200, {
       otherFields: { offset, limit, total },
     });
@@ -85,5 +107,4 @@ export class jobController {
     });
     response(res, null);
   });
-
 }
