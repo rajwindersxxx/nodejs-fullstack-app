@@ -8,18 +8,18 @@ import { getMyJobsListing } from "../api/jobs";
 
 const PostJob = () => {
   const { openModal } = useModal();
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["selfPosted"],
     queryFn: getMyJobsListing,
   });
-
+  if(isLoading) return <>Loading....</>
   return (
     <>
       <CreateJobForm />
       <div className="mx-auto max-w-3xl">
         <h2 className="p-4 text-center text-xl">Recently Posted</h2>
         <div className="flex flex-col gap-4">
-          {data?.data.map((item) => (
+          {data?.data?.map((item) => (
             <JobCard item={item} key={item.id}>
               <button type="button" className="hover:cursor-pointer">
                 <HiOutlineTrash size={25} color="red" />

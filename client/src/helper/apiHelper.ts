@@ -13,7 +13,7 @@ export async function postRequest({
     headers: {
       "content-Type": contentType,
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(data ?? {}),
     credentials: "include",
   });
   const output = await res.json();

@@ -1,16 +1,16 @@
-import type { ReactNode } from "react";
-import useAuth from "../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
+import { type ReactNode } from "react";
+import { Navigate } from "react-router-dom";
+import { useAuthContext } from "../context/AuthContext";
 
 interface props {
   children: ReactNode;
 }
 const ProtectedRoute = ({ children }: props) => {
-  const { isError, isLoading } = useAuth();
-  const navigate = useNavigate();
-  if (isError) navigate("/login");
+  const { isLoggedIn, isVerifying } = useAuthContext();
+  if (isVerifying) return <>Loading...</>;
 
-  if(isLoading) return <>Loading....</>
+  if (!isLoggedIn) return <Navigate to="/login" />;
+
   return <>{children}</>;
 };
 

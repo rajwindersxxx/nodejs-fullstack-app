@@ -1,11 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Input } from "./ui/Input";
 import { PrimaryButton } from "./ui/PrimaryButton";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import type { Login } from "../types/auth.type";
-import { useMutation } from "@tanstack/react-query";
-import { loginUser } from "../api/auth";
+
 import { useState } from "react";
+import { useAuthContext } from "../context/AuthContext";
 
 const LoginForm = () => {
   const [error, setError] = useState<string>();
@@ -15,19 +15,12 @@ const LoginForm = () => {
     reset,
     formState: { errors },
   } = useForm<Login>();
-  const navigation = useNavigate();
-  const { isPending, mutate: signupUser } = useMutation({
-    mutationFn: (input: Login) => loginUser(input),
-    onSuccess: () => {
-      navigation("/post");
-      reset()
-    },
-    onError: (error) => {
-      setError(error.message);
-    },
-  });
+  const { login, isLoggingIn } = useAuthContext();
   const onSubmit: SubmitHandler<Login> = (data) => {
-    signupUser(data);
+    login(data, {
+      onSuccess: () => reset(),
+      onError: (error) => setError(error.message),
+    });
   };
   return (
     <div>
@@ -37,16 +30,18 @@ const LoginForm = () => {
           label="Email"
           placeholder="Enter your email "
           type="text"
+          defaultValue={'rajwindersyyy@gmail.com'}
           {...register("email", { required: "Email is required" })}
           error={errors.email?.message as string}
-          disabled={isPending}
+          disabled={isLoggingIn}
           required
         />
         <Input
           label="Password"
           placeholder="Enter Your password"
           type="password"
-          disabled={isPending}
+          defaultValue={123456}
+          disabled={isLoggingIn}
           error={errors.password?.message as string}
           {...register("password", {
             required: "Password is required",
@@ -57,9 +52,11 @@ const LoginForm = () => {
           })}
           required
         />
-        {error && <p className="text-center text-sm text-red-500">{error}</p>}
+        {error && (
+          <p className="text-center text-sm text-red-500">{error}</p>
+        )}
 
-        <PrimaryButton type="submit" disabled={isPending}>
+        <PrimaryButton type="submit" disabled={isLoggingIn}>
           Sign In
         </PrimaryButton>
       </form>
