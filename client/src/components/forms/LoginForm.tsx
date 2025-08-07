@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import { Input } from "./ui/Input";
-import { PrimaryButton } from "./ui/PrimaryButton";
+import { Input } from "../ui/Input";
+import { PrimaryButton } from "../ui/PrimaryButton";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import type { Login } from "../types/auth.type";
+import type { Login } from "../../types/auth.type";
 
 import { useState } from "react";
-import { useAuthContext } from "../context/AuthContext";
+import { useAuthContext } from "../../context/AuthContext";
 
 const LoginForm = () => {
   const [error, setError] = useState<string>();
@@ -30,7 +30,7 @@ const LoginForm = () => {
           label="Email"
           placeholder="Enter your email "
           type="text"
-          defaultValue={'rajwindersyyy@gmail.com'}
+          defaultValue={"rajwindersyyy@gmail.com"}
           {...register("email", { required: "Email is required" })}
           error={errors.email?.message as string}
           disabled={isLoggingIn}
@@ -52,9 +52,7 @@ const LoginForm = () => {
           })}
           required
         />
-        {error && (
-          <p className="text-center text-sm text-red-500">{error}</p>
-        )}
+        {error && <p className="text-center text-sm text-red-500">{error}</p>}
 
         <PrimaryButton type="submit" disabled={isLoggingIn}>
           Sign In

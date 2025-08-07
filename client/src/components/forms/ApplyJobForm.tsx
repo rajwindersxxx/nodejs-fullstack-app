@@ -1,12 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import type { ApplyJob, JobDetails } from "../types/job.type";
-import { applyJob } from "../api/jobs";
+import type { ApplyJob, JobDetails } from "../../types/job.type";
+import { applyJob } from "../../api/jobs";
 import { useState } from "react";
-import { Input } from "./ui/Input";
-import { PrimaryButton } from "./ui/PrimaryButton";
-import { useModal } from "../context/ModalContext";
-import ConfirmModel from "./ConfirmModel";
+import { Input } from "../ui/Input";
+import { PrimaryButton } from "../ui/PrimaryButton";
+import { useModal } from "../../context/ModalContext";
+import ConfirmModel from "../ui/ConfirmModel";
 interface props {
   data: JobDetails;
 }

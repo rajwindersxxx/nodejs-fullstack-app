@@ -1,61 +1,59 @@
 import { useState } from "react";
-import type { JobDetails, UpdateJob } from "../types/job.type";
-import { Input } from "./ui/Input";
-import { PrimaryButton } from "./ui/PrimaryButton";
-import { Textarea } from "./ui/TextArea";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateJob } from "../api/jobs";
+import { Input } from "../ui/Input";
+import { PrimaryButton } from "../ui/PrimaryButton";
+import { Textarea } from "../ui/TextArea";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { useModal } from "../context/ModalContext";
-interface props {
-  data: JobDetails;
-}
-const EditJobForm = ({ data }: props) => {
+import type { CreateJob } from "../../types/job.type";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createJob } from "../../api/jobs";
+
+const CreateJobForm = () => {
   const [error, setError] = useState<string>();
-  const { closeModal } = useModal();
   const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<UpdateJob>();
-  const { mutate: updateJobPosting, isPending } = useMutation({
-    mutationKey: ["updateJob"],
-    mutationFn: (input: UpdateJob) => updateJob(data.id, input),
+  } = useForm<CreateJob>();
+  const { mutate: postNewJob, isPending } = useMutation({
+    mutationKey: ["createJob"],
+    mutationFn: (input: CreateJob) => createJob(input),
     onSuccess: () => {
       reset();
       queryClient.invalidateQueries({ queryKey: ["selfPosted"] });
-      closeModal();
     },
     onError: (error) => {
       setError(error.message);
     },
   });
-  const onSubmit: SubmitHandler<UpdateJob> = (data) => updateJobPosting(data);
+  const onSubmit: SubmitHandler<CreateJob> = (data) => postNewJob(data);
   return (
-    <div className="mx-auto w-3xl">
-      <h2 className="p-2 text-center text-xl">Update job posting</h2>
+    <div className="mx-auto max-w-3xl">
+      <h2 className="p-2 text-center text-xl">Create a job posting</h2>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
         <Input
           label="Title"
           placeholder="Enter title of job "
           type="text"
-          defaultValue={data.title}
-          disabled
+          disabled={isPending}
+          error={errors.title?.message}
+          {...register("title", { required: "Title is required" })}
+          required
         />
         <Input
           label="Company"
           placeholder="Enter Your company name  "
           type="text"
-          defaultValue={data.company}
-          disabled
+          disabled={isPending}
+          error={errors.company?.message}
+          {...register("company", { required: "Company name is required" })}
+          required
         />
         <Input
           label="Location"
           placeholder="Enter Job Location"
           type="text"
-          defaultValue={data.location}
           disabled={isPending}
           error={errors.location?.message}
           {...register("location", { required: "Location is required" })}
@@ -64,7 +62,6 @@ const EditJobForm = ({ data }: props) => {
         <Textarea
           label="Job description"
           placeholder="Enter job description"
-          defaultValue={data.description}
           {...register("description", {
             required: "Job description is required",
           })}
@@ -72,14 +69,15 @@ const EditJobForm = ({ data }: props) => {
           error={errors.description?.message}
           required
         />
-        {error && <p className="text-center text-sm text-red-500">{error}</p>}
-
+        {error && <p className="text-center text-xs text-red-500">{error}</p>}
         <div className="flex justify-end">
-          <PrimaryButton type="submit" disabled={isPending}>Update Listing</PrimaryButton>
+          <PrimaryButton type="submit" disabled={isPending}>
+            Create Listing
+          </PrimaryButton>
         </div>
       </form>
     </div>
   );
 };
 
-export default EditJobForm;
+export default CreateJobForm;

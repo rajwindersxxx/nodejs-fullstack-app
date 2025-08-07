@@ -1,10 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Input } from "./ui/Input";
-import { PrimaryButton } from "./ui/PrimaryButton";
+import { Input } from "../ui/Input";
+import { PrimaryButton } from "../ui/PrimaryButton";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import type { SignUp } from "../types/auth.type";
+import type { SignUp } from "../../types/auth.type";
 import { useMutation } from "@tanstack/react-query";
-import { signUp } from "../api/auth";
+import { signUp } from "../../api/auth";
 import { useState } from "react";
 
 const SignupForm = () => {
@@ -20,7 +20,7 @@ const SignupForm = () => {
     mutationFn: (input: SignUp) => signUp(input),
     onSuccess: () => {
       reset();
-      navigation("/post")
+      navigation("/post");
     },
     onError: (error) => {
       setError(error.message);

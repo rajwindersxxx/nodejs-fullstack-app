@@ -13,7 +13,7 @@ import ApplicantsListPage from "./pages/ApplicantsListPage";
 const queryClient = new QueryClient();
 function App() {
   return (
-    <div className="flex h-screen flex-col">
+    <div className="flex min-h-screen flex-col">
       <BrowserRouter>
         <QueryClientProvider client={queryClient}>
           <AuthProvider>

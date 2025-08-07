@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import JobCard from "../components/JobCard";
+import JobCard from "../components/ui/JobCard";
 import { PrimaryButton } from "../components/ui/PrimaryButton";
 import { getAllJobListing } from "../api/jobs";
 import { useModal } from "../context/ModalContext";
-import ApplyJobForm from "../components/ApplyJobForm";
+import ApplyJobForm from "../components/forms/ApplyJobForm";
 
 const JobListing = () => {
   const { openModal } = useModal();
@@ -17,9 +17,7 @@ const JobListing = () => {
       {data?.data?.map((item) => (
         <JobCard key={item.id} item={item}>
           <PrimaryButton
-            onClick={() =>
-              openModal(<ApplyJobForm data={item} />, "applyJob")
-            }
+            onClick={() => openModal(<ApplyJobForm data={item} />, "applyJob")}
           >
             Apply now
           </PrimaryButton>

@@ -1,6 +1,7 @@
-import { useModal } from "../context/ModalContext";
-import { PrimaryButton } from "./ui/PrimaryButton";
-import { SecondaryButton } from "./ui/SecondaryButton";
+import { useModal } from "../../context/ModalContext";
+import { PrimaryButton } from "./PrimaryButton";
+import { SecondaryButton } from "./SecondaryButton";
+
 interface props {
   confirmDelete?: () => void;
   message: string;

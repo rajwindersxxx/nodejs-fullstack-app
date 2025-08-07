@@ -1,12 +1,12 @@
-import CreateJobForm from "../components/CreateJobForm";
-import JobCard from "../components/JobCard";
+import CreateJobForm from "../components/forms/CreateJobForm";
+import JobCard from "../components/ui/JobCard";
 import { HiEye, HiOutlineTrash, HiPencil } from "react-icons/hi";
 import { useModal } from "../context/ModalContext";
-import EditJobForm from "../components/EditJobForm";
+import EditJobForm from "../components/forms/EditJobForm";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { deleteJob, getMyJobsListing } from "../api/jobs";
-import ConfirmModel from "../components/ConfirmModel";
 import { Link } from "react-router-dom";
+import ConfirmModel from "../components/ui/ConfirmModel";
 
 const AdminPage = () => {
   const { openModal, closeModal } = useModal();
