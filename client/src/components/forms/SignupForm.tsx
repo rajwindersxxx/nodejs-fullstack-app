@@ -6,8 +6,11 @@ import type { SignUp } from "../../types/auth.type";
 import { useMutation } from "@tanstack/react-query";
 import { signUp } from "../../api/auth";
 import { useState } from "react";
+import { useModal } from "../../context/ModalContext";
+import ConfirmModel from "../ui/ConfirmModel";
 
 const SignupForm = () => {
+  const { openModal } = useModal();
   const [error, setError] = useState<string>();
   const {
     register,
@@ -20,15 +23,20 @@ const SignupForm = () => {
     mutationFn: (input: SignUp) => signUp(input),
     onSuccess: () => {
       reset();
+      openModal(
+        <ConfirmModel
+          message="Account Created Successfully, Login now"
+          type="message"
+        />,
+        "signUpMessage",
+      );
       navigation("/post");
     },
     onError: (error) => {
       setError(error.message);
     },
   });
-  const onSubmit: SubmitHandler<SignUp> = (data) => {
-    signupUser(data);
-  };
+  const onSubmit: SubmitHandler<SignUp> = (data) => signupUser(data);
   return (
     <div className="absolute top-1/2 left-1/2 w-sm -translate-x-1/2 -translate-y-1/2">
       <h2 className="p-2 text-center text-xl">Sign up to get started</h2>
@@ -37,7 +45,13 @@ const SignupForm = () => {
           label="Email"
           placeholder="Enter your email "
           type="text"
-          {...register("email", { required: "Email is required" })}
+          {...register("email", {
+            required: "Email is required",
+            pattern: {
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              message: "Invalid email address",
+            },
+          })}
           error={errors.email?.message as string}
           disabled={isPending}
           required

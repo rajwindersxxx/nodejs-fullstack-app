@@ -16,8 +16,13 @@ export async function createJob(data: CreateJob) {
     data,
   });
 }
-export async function getAllJobListing(): Promise<JobListings> {
-  const res = await fetch(`${baseUrl}/api/v1/jobs`);
+export async function getAllJobListing(
+  offset: number = 0,
+  limit: number = 10,
+): Promise<JobListings> {
+  const res = await fetch(
+    `${baseUrl}/api/v1/jobs?limit=${limit}&&offset=${offset}`,
+  );
   const data = await res.json();
   return data;
 }
@@ -41,12 +46,17 @@ export async function deleteJob(jobId: number) {
     data: null,
   });
 }
-export async function getMyJobsListing(): Promise<JobListings> {
-  const res = await fetch(`${jobUrl}/me`, { credentials: "include" });
+export async function getMyJobsListing(
+  offset: number = 0,
+  limit: number = 10,
+): Promise<JobListings> {
+  const res = await fetch(`${jobUrl}/me?limit=${limit}&&offset=${offset}`, {
+    credentials: "include",
+  });
   const data = res.json();
   return data;
 }
-
+// * application data
 export async function applyJob(jobId: number, data: FormData) {
   return await postRequest({
     url: `${baseUrl}/api/v1/apply/${jobId}`,
@@ -55,9 +65,14 @@ export async function applyJob(jobId: number, data: FormData) {
 }
 export async function getJobApplications(
   jobId: number,
+  offset: number = 0,
+  limit: number = 10,
 ): Promise<ApplicationList> {
-  const res = await fetch(`${baseUrl}/api/v1/apply/${jobId}`, {
-    credentials: "include",
-  });
+  const res = await fetch(
+    `${baseUrl}/api/v1/apply/${jobId}?limit=${limit}&&offset=${offset}`,
+    {
+      credentials: "include",
+    },
+  );
   return res.json();
 }

@@ -30,7 +30,6 @@ const LoginForm = () => {
           label="Email"
           placeholder="Enter your email "
           type="text"
-          defaultValue={"rajwindersyyy@gmail.com"}
           {...register("email", { required: "Email is required" })}
           error={errors.email?.message as string}
           disabled={isLoggingIn}
@@ -40,7 +39,6 @@ const LoginForm = () => {
           label="Password"
           placeholder="Enter Your password"
           type="password"
-          defaultValue={123456}
           disabled={isLoggingIn}
           error={errors.password?.message}
           {...register("password", {

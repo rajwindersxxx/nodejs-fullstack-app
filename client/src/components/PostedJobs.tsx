@@ -16,7 +16,7 @@ const PostedJobs = () => {
 
   const { data, isLoading } = useQuery({
     queryKey: ["selfPosted"],
-    queryFn: getMyJobsListing,
+    queryFn:() =>  getMyJobsListing(),
   });
   const { mutate: deleteJobListing, isPending } = useMutation({
     mutationFn: (jobId: number) => deleteJob(jobId),

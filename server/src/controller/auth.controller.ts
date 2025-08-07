@@ -7,10 +7,17 @@ import response from "../utils/response";
 import { appError } from "../utils/appError";
 import { clearCookie, responseCookie } from "../utils/cookies";
 export class authController {
-  static signupUser = catchAsync(async (req, res, _next) => {
-    const data = await prisma.user.create({
-      data: req.body,
-    });
+  static signupUser = catchAsync(async (req, res, next) => {
+    let data;
+    try {
+      data = await prisma.user.create({
+        data: req.body,
+      });
+    } catch (error) {
+      if (error.code === "P2002")
+        return next(new appError("Email already exist", 409));
+      throw error;
+    }
     response(res, data, 200, {
       hideFields: ["updatedAt", "password"],
       otherFields: { message: "Account Created Successfully" },
@@ -106,6 +113,6 @@ export class authController {
         id: true,
       },
     });
-    response(res, data)
+    response(res, data);
   });
 }

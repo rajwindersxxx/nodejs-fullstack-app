@@ -6,9 +6,12 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import type { CreateJob } from "../../types/job.type";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createJob } from "../../api/jobs";
+import { useModal } from "../../context/ModalContext";
+import ConfirmModel from "../ui/ConfirmModel";
 
 const CreateJobForm = () => {
   const [error, setError] = useState<string>();
+  const { openModal } = useModal();
   const queryClient = useQueryClient();
   const {
     register,
@@ -22,6 +25,10 @@ const CreateJobForm = () => {
     onSuccess: () => {
       reset();
       queryClient.invalidateQueries({ queryKey: ["selfPosted"] });
+      openModal(
+        <ConfirmModel message="Job created Successfully" type="message" />,
+        "createMessage",
+      );
     },
     onError: (error) => {
       setError(error.message);
@@ -38,7 +45,13 @@ const CreateJobForm = () => {
           type="text"
           disabled={isPending}
           error={errors.title?.message}
-          {...register("title", { required: "Title is required" })}
+          {...register("title", {
+            required: "Title is required",
+            minLength: {
+              value: 3,
+              message: "title should be at least  then 3 characters",
+            },
+          })}
           required
         />
         <Input
@@ -47,7 +60,13 @@ const CreateJobForm = () => {
           type="text"
           disabled={isPending}
           error={errors.company?.message}
-          {...register("company", { required: "Company name is required" })}
+          {...register("company", {
+            required: "Company name is required",
+            minLength: {
+              value: 3,
+              message: "Company name should be at least  then 3 characters",
+            },
+          })}
           required
         />
         <Input
@@ -56,7 +75,13 @@ const CreateJobForm = () => {
           type="text"
           disabled={isPending}
           error={errors.location?.message}
-          {...register("location", { required: "Location is required" })}
+          {...register("location", {
+            required: "Location is required",
+            minLength: {
+              value: 3,
+              message: "location should be at least  then 3 characters",
+            },
+          })}
           required
         />
         <Textarea
@@ -64,6 +89,10 @@ const CreateJobForm = () => {
           placeholder="Enter job description"
           {...register("description", {
             required: "Job description is required",
+            minLength: {
+              value: 20,
+              message: "description should be at least  then 20 characters",
+            },
           })}
           disabled={isPending}
           error={errors.description?.message}

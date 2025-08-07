@@ -3,60 +3,66 @@ import { useParams } from "react-router-dom";
 import { getJobApplications, getJobDetails } from "../api/jobs";
 import JobCard from "../components/ui/JobCard";
 import Spinner from "../components/ui/Spinner";
+import ErrorMessage from "../components/ui/ErrorMessage";
 const ApplicantsListPage = () => {
   const { id } = useParams();
-  const { data , isLoading: loadingJob } = useQuery({
+  const { data, isLoading: loadingJob } = useQuery({
     queryKey: ["jobDetails", id],
     queryFn: () => getJobDetails(Number(id)),
   });
-  const { data: ApplicantData , isLoading: loadingApplication} = useQuery({
+  const { data: ApplicantData, isLoading: loadingApplication } = useQuery({
     queryKey: ["applicantData", id],
     queryFn: () => getJobApplications(Number(id)),
   });
-  if(loadingJob || loadingApplication) return <Spinner />
+  if (loadingJob || loadingApplication) return <Spinner />;
   return (
     <div className="mx-auto flex max-w-3xl flex-col gap-4">
       {data && <JobCard item={data} />}
       <h2 className="p-4 text-center text-xl font-semibold">Applications </h2>
-      <div className="overflow-hidden rounded-md border border-gray-200">
-        <table className="min-w-full table-auto">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">
-                Name
-              </th>
-              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">
-                Email
-              </th>
-              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">
-                Resume
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {ApplicantData?.data.map((applicant, idx) => (
-              <tr key={idx} className="hover:bg-gray-50">
-                <td className="px-4 py-2 text-sm text-gray-800">
-                  {applicant.name}
-                </td>
-                <td className="px-4 py-2 text-sm text-gray-800">
-                  {applicant.email}
-                </td>
-                <td className="px-4 py-2 text-sm text-blue-600">
-                  <a
-                    href={applicant.resumeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline hover:text-blue-800"
-                  >
-                    View Resume
-                  </a>
-                </td>
+      {ApplicantData?.data.length === 0 && (
+        <ErrorMessage>No Applications yet</ErrorMessage>
+      )}
+      {ApplicantData && ApplicantData?.data.length > 0 && (
+        <div className="overflow-hidden rounded-md border border-gray-200">
+          <table className="min-w-full table-auto">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">
+                  Name
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">
+                  Email
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">
+                  Resume
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {ApplicantData?.data.map((applicant, idx) => (
+                <tr key={idx} className="hover:bg-gray-50">
+                  <td className="px-4 py-2 text-sm text-gray-800">
+                    {applicant.name}
+                  </td>
+                  <td className="px-4 py-2 text-sm text-gray-800">
+                    {applicant.email}
+                  </td>
+                  <td className="px-4 py-2 text-sm text-blue-600">
+                    <a
+                      href={applicant.resumeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline hover:text-blue-800"
+                    >
+                      View Resume
+                    </a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };

@@ -14,9 +14,11 @@ const Header = () => {
           <li>
             <Link to="/">Jobs</Link>
           </li>
-          <li>
-            <Link to="/post">Post Job</Link>
-          </li>
+          {isLoggedIn && (
+            <li>
+              <Link to="/post">Post Job</Link>
+            </li>
+          )}
           <li>
             {isLoggedIn ? (
               <button
@@ -27,10 +29,10 @@ const Header = () => {
               </button>
             ) : (
               <Link
-                to="/login"
+                to="/post"
                 className="flex items-center gap-2 rounded-full border p-2"
               >
-                Login <HiOutlineLogin size={20} />
+                Post Job <HiOutlineLogin size={20} />
               </Link>
             )}
           </li>

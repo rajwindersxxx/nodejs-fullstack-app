@@ -11,12 +11,12 @@ const JobListing = () => {
   const { openModal } = useModal();
   const { data, isLoading } = useQuery({
     queryKey: ["jobListing"],
-    queryFn: getAllJobListing,
+    queryFn:() => getAllJobListing(),
   });
   if (isLoading) return <Spinner />;
   return (
     <div className="mx-auto flex max-w-3xl flex-col gap-4">
-      <h2 className="p-4 text-center text-3xl">Recently Added </h2>
+      <h2 className="p-4 text-center text-3xl">Recent Job Listing </h2>
       {data?.data.length === 0 && (
         <ErrorMessage>No Job listing Yet.</ErrorMessage>
       )}

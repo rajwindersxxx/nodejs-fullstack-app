@@ -1,28 +1,47 @@
 import z from "zod";
-const password = z.string().min(4).max(15);
+
+const password = z
+  .string()
+  .trim()
+  .min(6, "Password must be at least 6 characters")
+  .max(32, "Password must be at most 32 characters");
+
+
+const email = z.string().trim().email("Invalid email format");
+
 export const loginSchema = {
   bodySchema: z
     .object({
-      email: z.string().email(),
-      password: password,
+      email,
+      password,
     })
     .strict(),
 };
+
 export const signupSchema = {
   bodySchema: z
     .object({
-      email: z.string().email(),
-      password: password,
+      email,
+      password,
       confirmPassword: password,
     })
-    .strict(),
+    .strict()
+    .refine((data) => data.password === data.confirmPassword, {
+      message: "Passwords do not match",
+      path: ["confirmPassword"],
+    }),
 };
+
 export const changePasswordSchema = {
   bodySchema: z
     .object({
-      currentPassword: z.string().min(4).max(15),
-      password: z.string().min(4).max(15),
-      confirmPassword: z.string().min(4).max(15),
+      currentPassword: password,
+      newPassword: password,
+      confirmPassword: password,
     })
-    .strict(),
+    .strict()
+    .refine((data) => data.newPassword === data.confirmPassword, {
+      message: "Passwords do not match",
+      path: ["confirmPassword"],
+    }),
 };

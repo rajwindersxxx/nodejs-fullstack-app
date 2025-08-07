@@ -10,6 +10,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
 import ApplicantsListPage from "./pages/ApplicantsListPage";
+import Footer from "./components/ui/Footer";
 const queryClient = new QueryClient();
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
                   <Route path="/signup" element={<SignupPage />} />
                 </Routes>
               </div>
+              <Footer />
             </ModalProvider>
             <ReactQueryDevtools initialIsOpen={false} />
           </AuthProvider>
