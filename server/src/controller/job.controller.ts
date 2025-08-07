@@ -48,7 +48,6 @@ export class jobController {
       take: limit,
       skip: offset,
     });
-    console.log(data);
     const total = await prisma.job.count({
       ...filterOptions,
       where: {
@@ -60,6 +59,22 @@ export class jobController {
       otherFields: { offset, limit, total },
     });
   });
+  static getJobDetails = catchAsync(async (req, res, _next) => {
+    const data = await prisma.job.findUnique({
+      where: {
+        id: Number(req.params.id),
+      },
+      include: {
+        _count: {
+          select: {
+            application: true,
+          },
+        },
+      },
+    });
+    response(res, data);
+  });
+
   static getAllJobs = catchAsync(async (req, res, _next) => {
     const { filterOptions, offset, limit } = new APIFeatures<
       typeof prisma.job.findMany
@@ -102,7 +117,7 @@ export class jobController {
         id: Number(req.params.id),
       },
       data: {
-        active: true,
+        active: false,
       },
     });
     response(res, null);

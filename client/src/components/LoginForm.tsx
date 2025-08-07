@@ -42,7 +42,7 @@ const LoginForm = () => {
           type="password"
           defaultValue={123456}
           disabled={isLoggingIn}
-          error={errors.password?.message as string}
+          error={errors.password?.message}
           {...register("password", {
             required: "Password is required",
             minLength: {

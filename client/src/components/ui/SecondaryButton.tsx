@@ -7,14 +7,14 @@ interface props {
 }
 export function SecondaryButton({
   children,
-  className = "min-w-44",
+  className = "min-w-33",
   onClick,
   type = "button",
   ...props
 }: props) {
   return (
     <button
-      className={`border-blue text-blue2 cursor-pointer rounded border bg-blue-400 py-2 disabled:border-gray-500 disabled:text-gray-500 ${className} common-styles-here`}
+      className={`flex cursor-pointer justify-center gap-4 rounded-lg border py-2 text-blue-500 transition-colors disabled:bg-gray-200 ${className}`}
       onClick={onClick}
       type={type}
       {...props}

@@ -28,10 +28,8 @@ export function Input({
   required = false,
   ...props
 }: InputProps) {
-  
-
   return (
-    <div className="w-full relative mb-2">
+    <div className="relative mb-2 w-full">
       {label && (
         <label
           htmlFor={name}
@@ -55,7 +53,7 @@ export function Input({
         disabled={disabled}
         {...props}
       />
-      {error && <p className="absolute  text-xs text-red-500">{error}</p>}
+      {error && <p className="absolute text-xs text-red-500">{error}</p>}
     </div>
   );
 }

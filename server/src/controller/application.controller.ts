@@ -1,4 +1,5 @@
 import { Application } from "../../generated/prisma";
+import { APIFeatures } from "../utils/apiFeatures";
 import { appError } from "../utils/appError";
 import { catchAsync } from "../utils/catchAsync";
 import { prisma } from "../utils/prismaClient";
@@ -21,5 +22,24 @@ export class applicationController {
     }
 
     response(res, data, 201);
+  });
+  static getJobApplications = catchAsync(async (req, res, _next) => {
+    const { filterOptions, offset, limit } = new APIFeatures<
+      typeof prisma.job.findMany
+    >(req.query as Record<string, string>)
+      .filter()
+      .limitFields()
+      .pagination()
+      .sort();
+    const data = await prisma.application.findMany({
+      ...filterOptions,
+      where: {
+        jobId: Number(req.params.id),
+      },
+
+      take: limit,
+      skip: offset,
+    });
+    response(res, data);
   });
 }

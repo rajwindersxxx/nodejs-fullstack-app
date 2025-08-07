@@ -13,10 +13,10 @@ interface ModalContextType {
   openModal: (
     content: ReactNode,
     modalName: string,
-    modalData?: unknown,
+    modalData?: Record<string, unknown>,
   ) => void;
   closeModal: () => void;
-  modalData: unknown;
+  modalData: Record<string, unknown> | null;
 }
 
 // Create Context
@@ -26,10 +26,16 @@ const ModalContext = createContext<ModalContextType | undefined>(undefined);
 export function ModalProvider({ children }: { children: ReactNode }) {
   const [modalContent, setModalContent] = useState<ReactNode | null>(null);
   const [activeModal, setActiveModal] = useState<string | null>(null);
-  const [modalData, setModalData] = useState<unknown>(null);
+  const [modalData, setModalData] = useState<Record<string, unknown> | null>(
+    null,
+  );
 
   const openModal = useCallback(
-    (content: ReactNode, modalName: string, data?: unknown) => {
+    (
+      content: ReactNode,
+      modalName: string,
+      data?: Record<string, unknown> | null,
+    ) => {
       setModalContent(content);
       setActiveModal(modalName);
       setModalData(data || null);

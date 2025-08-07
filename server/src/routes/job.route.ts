@@ -17,6 +17,7 @@ jobRouter.post(
 jobRouter.get("/me", jobController.getPostedJob);
 jobRouter
   .route("/:id")
+  .get(validationMiddleware(params), jobController.getJobDetails)
   .delete(validationMiddleware(params), jobController.deleteJob)
   .patch(validationMiddleware(updateJobSchema), jobController.updateJob);
 export default jobRouter;

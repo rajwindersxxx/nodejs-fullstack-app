@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import JobListing from "./pages/JobListing";
-import PostJob from "./pages/PostJob";
+import PostJob from "./pages/AdminPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/signupPage";
 import { ModalProvider } from "./context/ModalContext";
@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
+import ApplicantsListPage from "./pages/ApplicantsListPage";
 const queryClient = new QueryClient();
 function App() {
   return (
@@ -26,6 +27,14 @@ function App() {
                     element={
                       <ProtectedRoute>
                         <PostJob />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/post/:id"
+                    element={
+                      <ProtectedRoute>
+                        <ApplicantsListPage />
                       </ProtectedRoute>
                     }
                   />

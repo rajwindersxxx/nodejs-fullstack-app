@@ -19,9 +19,22 @@ export interface JobListings {
   data: JobDetails[];
 }
 export interface UpdateJob {
-  jobId: number;
-  data: {
-    location: string;
-    description: string;
-  };
+  location: string;
+  description: string;
+}
+export interface ApplyJob {
+  name: string;
+  email: string;
+  resume: FileList;
+}
+interface ApplicationDetails {
+  name: string,
+  email: string
+  resumeUrl: string
+}
+export interface ApplicationList {
+  limit: number;
+  offset: number;
+  total: number;
+  data: ApplicationDetails[];
 }
