@@ -35,8 +35,8 @@ export function response(
 
 export default response;
 /**
- *
- *
+ * this recursive function used to remove files for nested object ,
+ * found this function on internet
  * @param {object} obj
  * @param {string[]} [keyToRemove=[]]
  * @return {*}  {object}

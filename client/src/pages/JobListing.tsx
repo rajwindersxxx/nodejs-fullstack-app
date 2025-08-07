@@ -9,11 +9,12 @@ import ErrorMessage from "../components/ui/ErrorMessage";
 
 const JobListing = () => {
   const { openModal } = useModal();
-  const { data, isLoading } = useQuery({
+  const { data, isLoading , error } = useQuery({
     queryKey: ["jobListing"],
     queryFn:() => getAllJobListing(),
   });
   if (isLoading) return <Spinner />;
+  if(error) return <ErrorMessage>{error.message}</ErrorMessage>
   return (
     <div className="mx-auto flex max-w-3xl flex-col gap-4">
       <h2 className="p-4 text-center text-3xl">Recent Job Listing </h2>

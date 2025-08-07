@@ -8,11 +8,14 @@ async function main() {
   await prisma.job.deleteMany();
   await prisma.user.deleteMany();
   console.log("seeding users...");
-  const users: { email: string; password: string }[] = [];
+  const password = "$2b$12$f/QzbJBcUIoHRpGn1ucMW.ns624iuYHlBVxLplDj/gCxqGRAgsWZC";
+  const users: { email: string; password: string }[] = [
+    { email: "test@gmail.com", password },
+  ];
   for (let i = 0; i <= 10; i++) {
     const user = {
       email: faker.internet.email(),
-      password: "$2b$12$6neU6UMkKISM2q/mgCTF2.bp0XHzy0FXXCvLSmIuRg2rPIYp9MZ0W",
+      password,
     };
     users.push(user);
   }
@@ -60,13 +63,12 @@ async function main() {
       });
     }
   }
-  const userAuth = userData[0].email;
   await prisma.application.createManyAndReturn({
     data: applications,
   });
   console.log({
-    email: userAuth,
-    password: "user",
+   email: "test@gmail.com",
+    password: "123456",
     message: "all user password is same",
   });
 }

@@ -23,14 +23,14 @@ export class authMiddleware {
   });
   static protectedRoute = catchAsync(async (req, res, next) => {
     const token = req.cookies.jwtToken;
-    let decoded;
+    let decoded: { id: number; iat: number };
 
     if (!token?.trim())
       return next(
         new appError(
           "No token found, please Login to get access",
           401,
-          "INVALID_TOKEN"
+          "TOKEN_NOT_FOUND"
         )
       );
     try {
@@ -56,10 +56,10 @@ export class authMiddleware {
         );
       }
     }
-    if (!currentUser) return next(new appError("user not found", 401));
-
+    if (!currentUser)
+      return next(new appError("user not found", 401, "NOT_FOUND"));
+    // this will use all identify loggedIn in user
     req.user = { id: currentUser?.id };
-    console.log(req.user);
     next();
   });
 }

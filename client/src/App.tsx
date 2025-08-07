@@ -15,7 +15,7 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <div className="flex min-h-screen flex-col">
-      <BrowserRouter future={{ v7_relativeSplatPath: true }}>
+      <BrowserRouter >
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
             <ModalProvider>

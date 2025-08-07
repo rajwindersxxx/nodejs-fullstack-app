@@ -1,3 +1,10 @@
+/**
+ * used to apply sorting , filter , fields and pagination , specially made for prisma functions
+ *
+ * @export
+ * @class APIFeatures
+ * @template T  typeof prisma.job.findMany
+ */
 export class APIFeatures<T> {
   queryString: Record<string, string>;
   filterOptions: T;
@@ -14,17 +21,19 @@ export class APIFeatures<T> {
     const { fields, sortby, sortOrder, limit, offset, ...otherFields } =
       this.queryString;
     const selectedFilters: Record<string, unknown> = {};
+    //  this will loop through fields
     for (const [rawKey, rawValue] of Object.entries(otherFields)) {
+      // this will split key and value eg price[gte] => ["price" , "gte"]
       const match = rawKey.match(/^(\w+)(\[(\w+)\])?$/);
       if (!match) continue;
       const field = match[1];
-      const operator = match[3]; // may be undefined
+      const operator = match[3];
       let value: unknown = rawValue;
-      //   handle boolean and number values
+      // this wil convert string to types eg "true" => true or "134" => 123
       if (rawValue === "true") value = true;
       else if (rawValue === "false") value = false;
       else if (!isNaN(Number(rawValue))) value = Number(rawValue);
-
+      //  build filter condition
       if (operator) {
         selectedFilters[field] = { [operator]: value };
       } else {
