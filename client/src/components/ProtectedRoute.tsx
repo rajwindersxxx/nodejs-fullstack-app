@@ -7,9 +7,8 @@ interface props {
 }
 const ProtectedRoute = ({ children }: props) => {
   const { isLoggedIn, isVerifying } = useAuthContext();
-  if (isVerifying) return <>Loading...</>;
 
-  if (!isLoggedIn) return <Navigate to="/login" />;
+  if (!isLoggedIn && !isVerifying) return <Navigate to="/login" />;
 
   return <>{children}</>;
 };

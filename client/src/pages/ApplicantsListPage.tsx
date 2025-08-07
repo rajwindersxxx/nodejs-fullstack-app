@@ -2,19 +2,21 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { getJobApplications, getJobDetails } from "../api/jobs";
 import JobCard from "../components/ui/JobCard";
+import Spinner from "../components/ui/Spinner";
 const ApplicantsListPage = () => {
   const { id } = useParams();
-  const { data } = useQuery({
+  const { data , isLoading: loadingJob } = useQuery({
     queryKey: ["jobDetails", id],
     queryFn: () => getJobDetails(Number(id)),
   });
-  const { data: ApplicantData } = useQuery({
+  const { data: ApplicantData , isLoading: loadingApplication} = useQuery({
     queryKey: ["applicantData", id],
     queryFn: () => getJobApplications(Number(id)),
   });
+  if(loadingJob || loadingApplication) return <Spinner />
   return (
     <div className="mx-auto flex max-w-3xl flex-col gap-4">
-      {data && <JobCard item={data}>x</JobCard>}
+      {data && <JobCard item={data} />}
       <h2 className="p-4 text-center text-xl font-semibold">Applications </h2>
       <div className="overflow-hidden rounded-md border border-gray-200">
         <table className="min-w-full table-auto">
