@@ -2,6 +2,8 @@
 
 A modern full stack web application built with **React**, **Node.js**, **Express**, **TypeScript**, **Zod**, and **PostgreSQL** (via Prisma). Designed with scalability, validation, and maintainability in mind.
 
+- I use some patterns and library to make it reliable and clean.
+
 ## App preview
 
 ![App preview gif](sample/sample.gif)
@@ -22,18 +24,18 @@ A modern full stack web application built with **React**, **Node.js**, **Express
 - **Express.js**
 - **TypeScript**
 - **Zod** (for runtime validation)
-- **Prisma ORM** (it makes typescript sync with database )
+- **Prisma ORM** (for typescript sync with database )
 - **PostgreSQL**
 
 ### Dev Tools
 
 - **Vite React**
+- **docker**(optional)
 - **Nodemon**
 - **ESLint + Prettier**
 - **JWT Auth** (with cookies)
 
 ---
-
 
 ## 📁 Project Structure
 
@@ -73,6 +75,19 @@ A modern full stack web application built with **React**, **Node.js**, **Express
 ```
 
 ## Setting up Project in localhost
+
+If you have docker install just run docker yml to setup whole project
+
+```bash
+git clone https://github.com/rajwindersxxx/nodejs-fullstack-app.git
+cd nodejs-fullstack-app
+docker compose up --build
+```
+
+- visit: <http://localhost:5173> for frontend
+- visit: <http://localhost:3000> for api
+
+## manual Setup
 
 ### Backend setup
 
@@ -141,10 +156,11 @@ npm install
 npm run dev
 ```
 
-Access App =>  <https://localhost:5173>
+Access App => <https://localhost:5173>
 
 ## Backend Api docs
 
- To Access the api docs Visit link below
+To Access the api docs Visit link below
 
 - [API Documentation](https://documenter.getpostman.com/view/36192494/2sB3BDKBRG)
+
