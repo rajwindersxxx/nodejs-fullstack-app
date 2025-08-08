@@ -16,9 +16,9 @@
     "start": "NODE_ENV=production PORT=3000 node dist/server.js",
     "lint": "eslint './src/**/*.{js,ts}'",
     "lint:fix": "eslint --fix './src/**/*.{js,ts}'",
-    "migrate": "npx prisma migrate dev",
-    "seed": "npx prisma db seed",
-    "push": "npx prisma db push"
+    "migrate": "prisma migrate dev",
+    "seed": "prisma db seed",
+    "push": "prisma db push"
   },
   "dependencies": {
     "@prisma/client": "^6.13.0",
