@@ -134,6 +134,7 @@ docker compose up --build
 4. Initialize database:
 
    ```bash
+   npx prisma generate   # generate prisma modules
    npx prisma db push    # Push schema
    npx prisma db seed    # Seed sample data
    ```
