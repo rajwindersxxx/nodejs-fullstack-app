@@ -1,49 +1,56 @@
-# 🚀 Full Stack Web App
-
-A modern full stack web application built with **React**, **Node.js**, **Express**, **TypeScript**, **Zod**, and **PostgreSQL** (via Prisma). Designed with scalability, validation, and maintainability in mind.
-
-- I use some patterns and library to make it reliable and clean.
-
-## App preview
-
-![App preview gif](sample/sample.gif)
-
-## 🛠️ Tech Stack
-
-### Frontend
-
-- **React** (with Vite or CRA)
-- **React Router**
-- **React Query** (for batter catching System)
-- **React Form hook** (for forms and validation)
-- **Tailwind CSS** (for designing faster)
-
-### Backend
-
-- **Node.js**
-- **Express.js**
-- **TypeScript**
-- **Zod** (for runtime validation)
-- **Prisma ORM** (for typescript sync with database )
-- **PostgreSQL**
-
-### Dev Tools
-
-- **Vite React**
-- **docker**(optional)
-- **Nodemon**
-- **ESLint + Prettier**
-- **JWT Auth** (with cookies)
 
 ---
 
-## 📁 Project Structure
+# 🚀 Full Stack Job Board web app
+
+A modern full-stack web application built with **React**, **Node.js**, **Express**, **TypeScript**, **Zod**, and **PostgreSQL** (via Prisma). Designed for **scalability**, **clean architecture**, and **runtime validation**.
+
+This project follows clean code patterns and uses carefully chosen libraries to ensure **reliability**, **maintainability**, and **developer productivity**.
+
+---
+
+## 📸 Preview
+
+![App preview gif](sample/sample.gif)
+
+---
+
+## 🛠 Tech Stack
+
+### **Frontend**
+
+* **React** (Vite or CRA)
+* **React Router**
+* **React Query** – Efficient server state management & caching
+* **React Hook Form** – Form handling & validation
+* **Tailwind CSS** – Rapid UI development
+
+### **Backend**
+
+* **Node.js**
+* **Express.js**
+* **TypeScript**
+* **Zod** – Runtime validation for safety
+* **Prisma ORM** – Type-safe DB access
+* **PostgreSQL**
+
+### **Dev Tools**
+
+* **Vite**
+* **Docker** (optional)
+* **Nodemon**
+* **ESLint + Prettier**
+* **JWT Auth** (via cookies)
+
+---
+
+## 📂 Project Structure
 
 ```bash
 .
 ├── client/               # React frontend
 │   └── src/
-│       ├── api/      #Api handlers
+│       ├── api/          # API handlers
 │       ├── assets/
 │       ├── components/
 │       ├── config/
@@ -51,12 +58,11 @@ A modern full stack web application built with **React**, **Node.js**, **Express
 │       ├── helper/
 │       ├── hooks/
 │       ├── pages/
-│       ├── types/  #type definition
-│       ├── hooks/
+│       ├── types/        # Type definitions
 │       ├── app.tsx
 │       ├── index.css
 │       └── main.tsx
-├── server/            #express backend
+├── server/               # Express backend
 │   ├── src/
 │   │   ├── config/
 │   │   ├── controller/
@@ -64,19 +70,27 @@ A modern full stack web application built with **React**, **Node.js**, **Express
 │   │   ├── routes/
 │   │   ├── types/
 │   │   ├── utils/
-│   │   ├── Zod/     #Zod validation Definitions
+│   │   ├── zod/          # Zod validation definitions
 │   │   ├── app.ts
 │   │   └── server.ts
-│   ├── uploads/           # uploads
-│   └── prisma/            # Prisma schema + migrations
+│   ├── uploads/          # File uploads
+│   └── prisma/           # Prisma schema & migrations
 ├── .gitignore
 ├── .env
 └── README.md
 ```
 
-## Setting up Project in localhost
+---
 
-If you have docker install just run docker yml to setup whole project
+## ⚙️ Setup Instructions
+
+### **System Requirements**
+
+* Debian Linux **or** Docker
+* Node.js v22+
+* PostgreSQL v15+
+
+If you’re using Docker, you can spin up the full stack with:
 
 ```bash
 git clone https://github.com/rajwindersxxx/nodejs-fullstack-app.git
@@ -84,83 +98,98 @@ cd nodejs-fullstack-app
 docker compose up --build
 ```
 
-- visit: <http://localhost:5173> for frontend
-- visit: <http://localhost:3000> for api
+* Frontend → [http://localhost:5173](http://localhost:5173)
+* Backend API → [http://localhost:3000](http://localhost:3000)
 
-## manual Setup
+---
 
-### Backend setup
+## 🔧 Manual Setup
 
-1. Clone the Repository
+### **Backend**
 
-```bash
+1. Clone the repository:
 
-git clone https://github.com/rajwindersxxx/nodejs-fullstack-app.git
-cd nodejs-fullstack-app
-```
+   ```bash
+   git clone https://github.com/rajwindersxxx/nodejs-fullstack-app.git
+   cd nodejs-fullstack-app/server
+   ```
 
-2. Install Dependencies
+2. Install dependencies:
 
-```bash
-cd server
-npm install
-```
+   ```bash
+   npm install
+   ```
 
-3. Config .env Dependencies inside server/
+3. Create `.env` file inside `server/`:
 
-```bash
-#Specify Port , connection string  ,jwt secret
-PORT=3000
-DATABASE_URL=postgresql://user:pass@localhost:5432/dbname
-JWT_SECRET=your_jwt_secret
-```
+   ```env
+   PORT=3000
+   DATABASE_URL=postgresql://user:pass@localhost:5432/dbname
+   JWT_SECRET=your_jwt_secret
+   ```
 
-4. Sitting up Database
+4. Initialize database:
 
-```bash
-npx prisma db push         #this will push schema to dev database
-npx prisma db seed         #This will create sample data
-```
+   ```bash
+   npx prisma db push    # Push schema
+   npx prisma db seed    # Seed sample data
+   ```
 
-4. Run backend server
+5. Run backend:
 
-```bash
-npm run dev
-```
+   ```bash
+   npm run dev
+   ```
 
-5. If you get this on terminal , then success
+   You should see:
 
-```bash
-Server is running on http://localhost:3000
-✅ Database connection successful
-```
+   ```
+   Server is running on http://localhost:3000
+   ✅ Database connection successful
+   ```
 
-### Frontend setup
+---
 
-1. Install Dependencies
+### **Frontend**
 
-```bash
-cd  ../client
-npm install
-```
+1. Navigate to client folder:
 
-2. If server is running on port other then 3000,then specify the url otherwise skip to 3rd step
+   ```bash
+   cd ../client
+   npm install
+   ```
 
-```bash
- Edit file- client/src/config/apiConfig.ts # Specify correct URL
-```
+2. If your backend is running on a port other than **3000**, update:
 
-3. Run Fronted
+   ```
+   client/src/config/apiConfig.ts
+   ```
 
-```bash
-npm run dev
-```
+3. Start frontend:
 
-Access App => <https://localhost:5173>
+   ```bash
+   npm run dev
+   ```
 
-## Backend Api docs
+   Access → [http://localhost:5173](http://localhost:5173)
 
-To Access the api docs Visit link below
+---
 
-- [API Documentation](https://documenter.getpostman.com/view/36192494/2sB3BDKBRG)
+## 📜 API Documentation
+
+The backend API is documented here:
+[**View API Docs**](https://documenter.getpostman.com/view/36192494/2sB3BDKBRG)
+
+---
+
+## ✅ Features
+
+* Type-safe backend & database
+* Centralized runtime validation with Zod
+* Optimized server state fetching & caching
+* Responsive, Tailwind-powered UI
+* JWT authentication with cookies
+* Docker-ready configuration
+
+---
 

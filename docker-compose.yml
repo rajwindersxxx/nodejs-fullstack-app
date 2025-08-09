@@ -17,6 +17,7 @@ services:
       - "3000:3000"
     environment:
       - DATABASE_URL=postgres://postgres:postgres@db:5432/mydb
+      - ACCESS_SECRET="hG4DPTV3Eyei5955EBG4CXzegwyqWrzLaBElfLrdTp0LCVdhkQXba6q9iqGOEzbD"
     depends_on:
       - db
     networks:
