@@ -88,7 +88,7 @@ This project follows clean code patterns and uses carefully chosen libraries to 
 
 * Debian Linux **or** Docker
 * Node.js v22+
-* PostgreSQL v15+
+* PostgreSQL v16+
 
 If you’re using Docker, you can spin up the full stack with:
 
@@ -113,6 +113,9 @@ docker compose up --build
    git clone https://github.com/rajwindersxxx/nodejs-fullstack-app.git
    cd nodejs-fullstack-app/server
    ```
+
+**Note**: Replace `user`, `pass`, and `dbname` with your database credentials.
+
 
 2. Install dependencies:
 
@@ -143,7 +146,7 @@ docker compose up --build
 
    You should see:
 
-   ```
+   ```bash
    Server is running on http://localhost:3000
    ✅ Database connection successful
    ```
@@ -161,7 +164,7 @@ docker compose up --build
 
 2. If your backend is running on a port other than **3000**, update:
 
-   ```
+   ```bash
    client/src/config/apiConfig.ts
    ```
 
