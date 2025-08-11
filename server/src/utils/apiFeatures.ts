@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /**
  * used to apply sorting , filter , fields and pagination , specially made for prisma functions
  *
@@ -17,10 +18,17 @@ export class APIFeatures<T> {
     this.offset = 0;
   }
   filter() {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { fields, sortby, sortOrder, limit, offset, ...otherFields } =
-      this.queryString;
-    const selectedFilters: Record<string, unknown> = {};
+    const {
+      fields,
+      sortby,
+      sortOrder,
+      limit,
+      offset,
+      searchBy,
+      search,
+      ...otherFields
+    } = this.queryString;
+    let selectedFilters: Record<string, unknown> = {};
     //  this will loop through fields
     for (const [rawKey, rawValue] of Object.entries(otherFields)) {
       // this will split key and value eg price[gte] => ["price" , "gte"]
@@ -39,6 +47,18 @@ export class APIFeatures<T> {
       } else {
         selectedFilters[field] = value;
       }
+    }
+    // add search filter (one at time )
+    if (searchBy && search) {
+      selectedFilters = {
+        ...selectedFilters,
+        ...{
+          [searchBy]: {
+            contains: search,
+            mode: "insensitive",
+          },
+        },
+      };
     }
     this.filterOptions = { ...this.filterOptions, where: selectedFilters };
     return this;
@@ -78,6 +98,16 @@ export class APIFeatures<T> {
 
     if (offset) this.offset = Number(offset);
     if (limit) this.limit = Number(limit);
+    return this;
+  }
+  activeOnly() {
+    this.filterOptions = {
+      ...this.filterOptions,
+      where: {
+        ...(this.filterOptions as { where: object }).where,
+        active: true,
+      },
+    };
     return this;
   }
 }
