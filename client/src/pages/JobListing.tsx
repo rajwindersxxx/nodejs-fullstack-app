@@ -1,37 +1,38 @@
-import { useQuery } from "@tanstack/react-query";
-import JobCard from "../components/ui/JobCard";
-import { PrimaryButton } from "../components/ui/PrimaryButton";
-import { getAllJobListing } from "../api/jobs";
-import { useModal } from "../context/ModalContext";
-import ApplyJobForm from "../components/forms/ApplyJobForm";
-import Spinner from "../components/ui/Spinner";
-import ErrorMessage from "../components/ui/ErrorMessage";
+import { useEffect, useState } from "react";
+import JobList from "../components/JobList";
+import { useUIContext } from "../context/UIContext";
 
 const JobListing = () => {
-  const { openModal } = useModal();
-  const { data, isLoading , error } = useQuery({
-    queryKey: ["jobListing"],
-    queryFn:() => getAllJobListing(),
-  });
-  if (isLoading) return <Spinner />;
-  if(error) return <ErrorMessage>{error.message}</ErrorMessage>
+  const { totalJobListing, search } = useUIContext();
+  const limit = 10;
+  const [jobs, setJobs] = useState<number[]>([0]);
+  function handlePagination() {
+    setJobs((preState) => [...preState, preState[preState.length - 1] + limit]);
+  }
+  useEffect(() => {
+    setJobs([0]);
+  }, [search]);
   return (
     <div className="mx-auto flex max-w-3xl flex-col gap-4">
       <h2 className="p-4 text-center text-3xl">Recent Job Listing </h2>
-      {data?.data.length === 0 && (
-        <ErrorMessage>No Job listing Yet.</ErrorMessage>
-      )}
-      {data?.data?.map((item) => (
-        <JobCard key={item.id} item={item}>
-          <PrimaryButton
-            onClick={() => openModal(<ApplyJobForm data={item} />, "applyJob")}
-          >
-            Apply now
-          </PrimaryButton>
-        </JobCard>
+      {jobs.map((item) => (
+        <JobList offset={item} key={item} />
       ))}
+      {jobs.at(-1) || 0 + limit < totalJobListing && (
+        <button
+          className="p-4 text-center text-xl underline"
+          onClick={handlePagination}
+        >
+          Show more
+        </button>
+      )}
     </div>
   );
 };
 
 export default JobListing;
+{
+  /* {jobListing?.data.length === 0 && (
+        <ErrorMessage>No Job listing Yet.</ErrorMessage>
+      )} */
+}

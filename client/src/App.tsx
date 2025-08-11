@@ -11,42 +11,45 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
 import ApplicantsListPage from "./pages/ApplicantsListPage";
 import Footer from "./components/ui/Footer";
+import { UIProvider } from "./context/UIContext";
 const queryClient = new QueryClient();
 function App() {
   return (
     <div className="flex min-h-screen flex-col">
-      <BrowserRouter >
+      <BrowserRouter>
         <QueryClientProvider client={queryClient}>
-          <AuthProvider>
-            <ModalProvider>
-              <Header />
-              <div className="flex-1 p-4">
-                <Routes>
-                  <Route index path="/" element={<JobListing />} />
-                  <Route
-                    path="/post"
-                    element={
-                      <ProtectedRoute>
-                        <PostJob />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/post/:id"
-                    element={
-                      <ProtectedRoute>
-                        <ApplicantsListPage />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route path="/login" element={<LoginPage />} />
-                  <Route path="/signup" element={<SignupPage />} />
-                </Routes>
-              </div>
-              <Footer />
-            </ModalProvider>
-            <ReactQueryDevtools initialIsOpen={false} />
-          </AuthProvider>
+          <UIProvider>
+            <AuthProvider>
+              <ModalProvider>
+                <Header />
+                <div className="flex-1 p-4">
+                  <Routes>
+                    <Route index path="/" element={<JobListing />} />
+                    <Route
+                      path="/post"
+                      element={
+                        <ProtectedRoute>
+                          <PostJob />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/post/:id"
+                      element={
+                        <ProtectedRoute>
+                          <ApplicantsListPage />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/signup" element={<SignupPage />} />
+                  </Routes>
+                </div>
+                <Footer />
+              </ModalProvider>
+              <ReactQueryDevtools initialIsOpen={false} />
+            </AuthProvider>
+          </UIProvider>
         </QueryClientProvider>
       </BrowserRouter>
     </div>

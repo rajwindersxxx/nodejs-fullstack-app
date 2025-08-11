@@ -17,12 +17,14 @@ export async function createJob(data: CreateJob) {
   });
 }
 export async function getAllJobListing(
-  offset: number = 0,
   limit: number = 10,
+  offset: number = 0,
+  searchBy?: string,
+  search?: string,
 ): Promise<JobListings> {
-  const res = await fetch(
-    `${baseUrl}/api/v1/jobs?limit=${limit}&&offset=${offset}`,
-  );
+  let url = `${baseUrl}/api/v1/jobs?limit=${limit}&&offset=${offset}`;
+  if (searchBy && search) url += `&&searchBy=${searchBy}&&search=${search}`;
+  const res = await fetch(url);
   const data = await res.json();
   return data;
 }
