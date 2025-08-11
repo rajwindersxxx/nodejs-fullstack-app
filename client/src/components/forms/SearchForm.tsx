@@ -14,7 +14,7 @@ const SearchForm = () => {
     }, 500);
   }
   return (
-    <div className="w-76 hover:w-96 focus:w-96 transition-all">
+    <div className="w-76 focus-within:w-96 transition-all ">
       <Input
         placeholder="Search For Job"
         type="text"
