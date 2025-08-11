@@ -30,6 +30,7 @@ export class jobController {
       .pagination()
       .sort()
       .activeOnly();
+    // * this is temporary fix
     const modifyFilterOptions = {
       ...filterOptions,
       where: {
@@ -37,16 +38,8 @@ export class jobController {
         userId: req.user.id,
       },
     };
-    console.log(modifyFilterOptions)
     const data = await prisma.job.findMany({
       ...modifyFilterOptions,
-      orderBy: {
-        id: "desc",
-      },
-      where: {
-        active: true,
-        userId: req.user.id,
-      },
       include: {
         _count: {
           select: {
@@ -94,9 +87,15 @@ export class jobController {
       .sort()
       .activeOnly();
 
-    console.log(filterOptions);
     const data = await prisma.job.findMany({
       ...filterOptions,
+      include: {
+        _count: {
+          select: {
+            application: true,
+          },
+        },
+      },
       take: limit,
       skip: offset,
     });
