@@ -22,7 +22,7 @@ export async function getAllJobListing(
   searchBy?: string,
   search?: string,
 ): Promise<JobListings> {
-  let url = `${baseUrl}/api/v1/jobs?limit=${limit}&&offset=${offset}`;
+  let url = `${baseUrl}/api/v1/jobs?limit=${limit}&&offset=${offset}&&sortby=id&&sortOrder=desc`;
   if (searchBy && search) url += `&&searchBy=${searchBy}&&search=${search}`;
   const res = await fetch(url);
   const data = await res.json();

@@ -99,10 +99,14 @@ export class jobController {
       take: limit,
       skip: offset,
     });
+    const { filterOptions: onlyFilter } = new APIFeatures<
+      typeof prisma.job.findMany
+    >(req.query as Record<string, string>)
+      .filter()
+      .sort()
+      .activeOnly();
     const total = await prisma.job.count({
-      where: {
-        active: true,
-      },
+      ...onlyFilter,
     });
 
     response(res, data, 200, {

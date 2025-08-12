@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import JobList from "../components/JobList";
 import { useUIContext } from "../context/UIContext";
+import ErrorMessage from "../components/ui/ErrorMessage";
 
 const JobListing = () => {
   const { totalJobListing, search } = useUIContext();
@@ -15,17 +16,21 @@ const JobListing = () => {
   return (
     <div className="mx-auto flex max-w-3xl flex-col gap-4">
       <h2 className="p-4 text-center text-3xl">Recent Job Listing </h2>
+      {totalJobListing === 0 && (
+        <ErrorMessage>No Job listing found.</ErrorMessage>
+      )}
       {jobs.map((item) => (
         <JobList offset={item} key={item} />
       ))}
-      {jobs.at(-1) || 0 + limit < totalJobListing && (
-        <button
-          className="p-4 text-center text-xl underline"
-          onClick={handlePagination}
-        >
-          Show more
-        </button>
-      )}
+      {jobs.at(-1) ||
+        (0 + limit <= totalJobListing && (
+          <button
+            className="p-4 text-center text-xl underline"
+            onClick={handlePagination}
+          >
+            Show more
+          </button>
+        ))}
     </div>
   );
 };
