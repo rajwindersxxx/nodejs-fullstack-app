@@ -6,7 +6,9 @@ node_modules
 dist
 generated
 .vscode
-server/uploads/**
+server/uploads/*
+!server/uploads/.gitkeep
+
 # Logs
 logs
 *.log
