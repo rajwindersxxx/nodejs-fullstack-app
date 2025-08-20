@@ -3,6 +3,7 @@ export interface CreateJob {
   company: string;
   location: string;
   description: string;
+  salary: string
 }
 export interface JobDetails extends CreateJob {
   id: number;
@@ -21,6 +22,7 @@ export interface JobListings {
 export interface UpdateJob {
   location: string;
   description: string;
+  salary: number
 }
 export interface ApplyJob {
   name: string;

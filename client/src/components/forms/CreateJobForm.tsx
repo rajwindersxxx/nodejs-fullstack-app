@@ -84,6 +84,21 @@ const CreateJobForm = () => {
           })}
           required
         />
+        <Input
+          label="Salary"
+          placeholder="Enter Job Salary"
+          type="number"
+          disabled={isPending}
+          error={errors.salary?.message}
+          {...register("salary", {
+            required: "Salary is Required",
+            minLength: {
+              value: 3,
+              message: "salary should be at least  then 3 characters",
+            },
+          })}
+          required
+        />
         <Textarea
           label="Job description"
           placeholder="Enter job description"

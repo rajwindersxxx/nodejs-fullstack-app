@@ -7,6 +7,7 @@ interface props {
     company: string;
     location: string;
     description: string;
+    salary: number;
     _count: {
       application: number;
     };
@@ -23,7 +24,9 @@ const JobCard = ({ children, item }: props) => {
       </div>
 
       <h3 className="text-md mb-1 text-gray-600">{item.company}</h3>
-      <p className="mb-3 text-sm text-gray-500">📍{item.location}</p>
+      <p className="mb-3 text-sm text-gray-500">
+        📍{item.location} , Salary: {item.salary}
+      </p>
 
       <p className="mb-4 line-clamp-3 text-sm text-gray-700">
         {item.description}

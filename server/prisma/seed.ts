@@ -29,6 +29,7 @@ async function main() {
     location: string;
     company: string;
     description: string;
+    salary: number;
   }[] = [];
   for (let i = 0; i <= 20; i++) {
     const job = {
@@ -37,6 +38,7 @@ async function main() {
       location: faker.location.city(),
       company: faker.company.name(),
       description: faker.lorem.paragraphs({ min: 1, max: 3 }),
+      salary: 2000
     };
     jobs.push(job);
   }

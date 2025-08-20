@@ -7,6 +7,7 @@ export const createJobSchema = {
       title: z.string().min(3, "Title is too short"),
       company: z.string().min(2, "Company name is required"),
       location: z.string().min(2, "Location is required"),
+      salary: z.string().regex(/^\d+$/, "Salary must be numeric").transform((val) => Number(val)), // optional: ensure only digits
       description: z
         .string()
         .min(10, "Description is too short")
@@ -19,6 +20,7 @@ export const updateJobSchema = {
   bodySchema: z
     .object({
       location: z.string().min(2, "Location is required"),
+      salary: z.string().regex(/^\d+$/, "Salary must be numeric").transform((val) => Number(val)),
       description: z
         .string()
         .min(10, "Description is too short")

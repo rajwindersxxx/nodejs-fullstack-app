@@ -24,13 +24,14 @@ model User {
 }
 
 model Job {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt @db.Timestamptz(6)
+  id          Int           @id @default(autoincrement())
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt @db.Timestamptz(6)
   title       String
   company     String
   location    String
   description String
+  salary      Int?          
   active      Boolean       @default(true)
   application Application[]
   User        User          @relation(fields: [userId], references: [id])
@@ -44,5 +45,6 @@ model Application {
   resumeUrl String
   Job       Job    @relation(fields: [jobId], references: [id])
   jobId     Int
+
   @@unique([email, jobId])
 }
