@@ -25,7 +25,7 @@ const JobCard = ({ children, item }: props) => {
 
       <h3 className="text-md mb-1 text-gray-600">{item.company}</h3>
       <p className="mb-3 text-sm text-gray-500">
-        📍{item.location} , Salary: {item.salary}
+        📍{item.location} ,<span className="text-green-800"> 💸 {item.salary}</span>
       </p>
 
       <p className="mb-4 line-clamp-3 text-sm text-gray-700">
