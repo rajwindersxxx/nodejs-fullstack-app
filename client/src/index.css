@@ -1,6 +1,6 @@
 @import "tailwindcss";
 body {
-  @apply text-gray-600
+  @apply text-gray-600 bg-amber-50
 }
 .loader {
     width: 48px;
